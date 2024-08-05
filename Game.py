@@ -75,7 +75,7 @@ class Ball:
         if xout == True and yout == True:
             self.counter = 0
 
-        if self.counter > 50:
+        if self.counter > 120:
             print ("Kludge stuck oob")
             #add check to see if middle is occupied
             self.x = 40
@@ -142,7 +142,7 @@ class Ball:
 pygame.init()
 
 # Set up the display
-width, height = 400,400 
+width, height = 1280,720 
 
 window = pygame.display.set_mode((width, height))
 programIcon = pygame.image.load('icon.png')
@@ -182,7 +182,7 @@ for sound in sounds:
 # Ball vars
 balls = []
 
-make_balls(3)
+make_balls(7)
 
 # Main game loop
 clock = pygame.time.Clock()
