@@ -63,8 +63,22 @@ motds = [
     "Welcome to the only game where the gooey texture is intentional and every game session feels like a wild, cinematic experiment!",
     "In Gelatinous Kludge, we’ve perfected the art of being a sticky, ungraspable mess. Sort of like how our hero handled those messy experiments!"
 ]
+_colours = [
+    (234, 118, 203), # Pink
+    (136, 57, 239),  # Mauve
+    (210, 15, 57),   # Red
+    (230, 69, 83),   # Maroon
+    (254, 100, 75),  # Peach
+    (223, 142, 29),  # Yellow
+    (64, 160, 43),   # Green
+    (23, 146, 153),  # Teal
+    (4, 165, 229),   # Sky
+    (32, 159, 181),  # Sapphire
+    (30, 102, 245),  # Blue
+    (114, 135, 253)  # Lavender
+]
 
-mocha = [
+colours = [
     (242, 205, 205),  # Flamingo
     (245, 194, 231),  # Pink
     (203, 166, 247),  # Mauve
