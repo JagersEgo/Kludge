@@ -5,15 +5,13 @@ from random import *
 from hPyT import *
 import ctypes
 import threading  # Import threading module
-import time
-import tkinter as tk
 
 from resources import *
 
 class Game:
     def __init__(self):
         # Initialize Pygame and set up the display
-        #pygame.init()
+        pygame.init()
         self.width = 1280
         self.height = 720
         self.window = pygame.display.set_mode((self.width, self.height))
@@ -25,7 +23,8 @@ class Game:
         self.scroll_speed_y = 0.2
 
         # Load sounds
-        
+        self.bounce_sound = pygame.mixer.Sound("saya_cute.ogg")
+        self.hit_sound = pygame.mixer.Sound("saya_kick_deeper.ogg")
 
         # Initialize balls
         self.balls = []
@@ -37,11 +36,11 @@ class Game:
         pygame.display.set_caption(caption)
 
         # Custom window modifications
-        #hpyt_window = ctypes.windll.user32.GetActiveWindow()
-        #maximize_minimize_button.hide(hpyt_window)
-        #border_color.set(hpyt_window, (24, 24, 37))
-        #hwnd = ctypes.windll.user32.GetActiveWindow()
-        #title_bar_color.set(hwnd, '#181825')
+        hpyt_window = ctypes.windll.user32.GetActiveWindow()
+        maximize_minimize_button.hide(hpyt_window)
+        border_color.set(hpyt_window, (24, 24, 37))
+        hwnd = ctypes.windll.user32.GetActiveWindow()
+        title_bar_color.set(hwnd, '#181825')
 
         # Create initial set of balls
         self.make_balls(7)
@@ -73,10 +72,6 @@ class Game:
                 pygame.draw.rect(self.window, self.GREY, rect, 1)
 
     def main_game_loop(self):
-        pygame.init()
-
-        self.bounce_sound = pygame.mixer.Sound("saya_cute.ogg")
-        self.hit_sound = pygame.mixer.Sound("saya_kick_deeper.ogg")
         clock = pygame.time.Clock()
 
         while True:
@@ -85,18 +80,12 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                elif event.type == pygame.ACTIVEEVENT:
-                    if event.gain == 0:  # Window loses focus
-                        pass  # Handle focus loss (pause, mute, etc.)
-                    else:  # Window gains focus
-                        pass  # Handle focus gain (resume, unmute, etc.)
 
             for ball in self.balls:
                 for other_ball in self.balls:
                     if ball != other_ball:
                         ball.check_collision(other_ball)
                 ball.move(self.dt)
-            
 
             self.bg_grid_offset_x = (self.bg_grid_offset_x + self.scroll_speed_x * self.dt * 60) % 107
             self.bg_grid_offset_y = (self.bg_grid_offset_y + self.scroll_speed_y * self.dt * 60) % 107
@@ -106,24 +95,22 @@ class Game:
 
             for ball in self.balls:
                 ball.draw(self.window)
-            
+
             pygame.display.flip()
                         
 
     def second_thread_function(self):
-        root = tk.Tk()
-        root.title("Tkinter Window")
-        root.geometry("400x300")
-        root.configure(bg='blue')
-        root.mainloop()
+        # Placeholder for the second thread's function
+        pass
+
 
 class Ball:
     def __init__(self, x, y, radius, speeds, game):
         self.x = x
         self.y = y
         self.radius = radius
-        self.x_speed = speeds[0] * 300  # Adjust speed factor as needed
-        self.y_speed = speeds[1] * 300  # Adjust speed factor as needed
+        self.x_speed = speeds[0] * 60  # Adjust speed factor as needed
+        self.y_speed = speeds[1] * 60  # Adjust speed factor as needed
         self.colour = get_random_item(colours)
         self.game = game
 
@@ -213,10 +200,8 @@ class Ball:
             pygame.gfxdraw.aacircle(temp, self.radius, self.radius, self.radius - self.width, BG)
         
         surface.blit(temp, (int(self.x) - self.radius, int(self.y) - self.radius), None, pygame.BLEND_ADD)
-
 if __name__ == "__main__":
     game = Game()
-    #game.main_game_loop()
 
     # Create threads
     thread1 = threading.Thread(target=game.main_game_loop)
